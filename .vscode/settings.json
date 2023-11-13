@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./message_postprocessing/service/src"
+    ]
+}

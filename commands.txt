@@ -1,0 +1,5 @@
+pip3 install numpy
+pip3 install pandas
+pip3 install psutil
+pip3 install symspellpy
+pip3 install pyspellchecker
