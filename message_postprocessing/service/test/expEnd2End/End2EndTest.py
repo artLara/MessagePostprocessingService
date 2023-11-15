@@ -50,9 +50,28 @@ class End2EndTest():
             pd.concat([df,df_alg1,df_sys,df_tra,df_union], ignore_index=True, axis=1).rename(columns={0: "target", 1: "jsonfile", 2:"noiseMessage", 3:"alg1", 4:"sys", 5:"tra", 6:"union"}).to_csv('confidence{}.csv'.format(confidence),index=False)
 
             # break
-    def runMakePhraseTest(self, selector=''):
+
+    def __getListFromString(self, m):
+        wordSets = m.split('-')
+        validWordsSet = []
+        for validWords in wordSets:
+            if len(validWords) < 1:
+                continue
+
+            words = validWords.split()
+            cleanWords = []
+            for word in words:
+                if word == '' or word ==' ':
+                    continue
+
+                cleanWords.append((-1, word))
+            validWordsSet.append(cleanWords)
+
+        return validWordsSet
+    
+    def runMakePhraseTest(self, selector='max'):
         confidenses=[0.0,0.5,0.6,0.7,0.8]
-        confidenses=[0.8]
+        confidenses=[0.0]
         for confidence in confidenses:
             df = pd.read_csv('confidence{}.csv'.format(confidence))
             messages = []
@@ -60,8 +79,11 @@ class End2EndTest():
             tra_list = []
             union_list = []
             for index in df.index:
-                wordSets = df['alg1'][index].split('-')
-                print(wordSets)
+                sets_string = df['alg1'][index]
+                validWords = self.__getListFromString(sets_string)
+                print(validWords)
+                message = self.__phraseCleaner.builtMessage(validWords, selector='contextGraph')
+                print(message)
                 break
             break
 

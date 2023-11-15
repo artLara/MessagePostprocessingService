@@ -115,6 +115,10 @@ class PhraseCleaner():
         words = self.__wordsSelector.getPhrase(cleanWordsSet, selector)
         return ' '.join(words)
     
+    def builtMessage(self, cleanWordsSet, selector='contextGraph'):
+        words = self.__wordsSelector.getPhrase(cleanWordsSet, selector)
+        return ' '.join(words)
+    
     def getWordsSet(self, phrase, maxOptWords=None):
         if maxOptWords == None:
             maxOptWords = self.__maxOptWords
