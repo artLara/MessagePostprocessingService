@@ -1,5 +1,5 @@
-from SimilarWords import SimilarWords
-from Utils import Utils
+from .SimilarWords import SimilarWords
+from .Utils import Utils
 import pickle
 import os
 class WordsSelector():
