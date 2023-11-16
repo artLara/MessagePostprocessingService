@@ -140,6 +140,7 @@ class WordsSelector():
 
     def contextGraph(self, words):
         # print('Len(words)', len(words))
+        # print('Context graph used')
         self.__graph = []
         tam = len(words) * len(words[0])
         self.__V = tam
@@ -168,7 +169,7 @@ class WordsSelector():
                     # if sw+1 >= len(words):
                     #     continue
 
-                    self.__graph[i+stride-sizeOptWords][j+stride] = -self.__getMI(words[sw][i][0],words[sw+1][j][0])
+                    self.__graph[i+stride-sizeOptWords][j+stride] = -self.__getMI(words[sw][i][1],words[sw+1][j][1])
                     # print('prob:(',words[sw][i][0],',',words[sw+1][j][0],')')
                     # self.__graph[i+stride-tam][j+stride] = -getProb(words[sw][i][0],words[sw+1][j][0])
             sw += 1

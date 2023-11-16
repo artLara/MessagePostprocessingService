@@ -9,11 +9,12 @@ class PhraseCleaner():
         self.__maxFrecuency = None
         self.__spell = SpellChecker(language='es')
         self.__vocabByLen = self.loadVocabulary()
-        self.__wordsSelector = WordsSelector()
+        tmpPath = '/content/MessagePostprocessingService/message_postprocessing/service/bin/similarWords/'
+        self.__wordsSelector = WordsSelector(pathOfObjectDirectory=tmpPath)
         self.__symSpell = SymSpell()
-        pathSymEspDict = '/home/lara/Desktop/dactilologiaLSM_microservices/MessagePostprocessingService/message_postprocessing/service/bin/dictionaries/es-100l.txt'
+        pathSymEspDict = '../../bin/dictionaries/es-100l.txt'
         self.__symSpell.load_dictionary(pathSymEspDict, 0, 1)
-        tajectoryTablesPath = '/home/lara/Desktop/dactilologiaLSM_microservices/MessagePostprocessingService/message_postprocessing/service/bin/spellingCorrectionTrajectory/'
+        tajectoryTablesPath = '../../bin/spellingCorrectionTrajectory/'
         self.__st = SpellingCorrectionTrajectory(pathFiles=tajectoryTablesPath)
 
     def loadVocabulary(self):

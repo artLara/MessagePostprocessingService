@@ -2,7 +2,7 @@ import pickle
 import os
 from .MutualInformation import MutualInformation
 class SimilarWords:
-    def __init__(self, pathOfObjectDirectory='../bin/similarWords/mutualInformation/'):
+    def __init__(self, pathOfObjectDirectory='../../bin/similarWords/mutualInformation/'):
         self.vocabulary = set()
         self.prob = {}
         self.prob_join = {}

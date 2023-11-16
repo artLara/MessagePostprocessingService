@@ -71,20 +71,62 @@ class End2EndTest():
     
     def runMakePhraseTest(self, selector='max'):
         confidenses=[0.0,0.5,0.6,0.7,0.8]
-        confidenses=[0.0]
         for confidence in confidenses:
             df = pd.read_csv('confidence{}.csv'.format(confidence))
-            messages = []
+            alg1_list = []
             sys_list = []
             tra_list = []
             union_list = []
             for index in df.index:
+                print('Procesando archivo {} mensaje {}'.format(confidence, index))
                 sets_string = df['alg1'][index]
                 validWords = self.__getListFromString(sets_string)
-                print(validWords)
-                message = self.__phraseCleaner.builtMessage(validWords, selector='contextGraph')
-                print(message)
-                break
+                message= ''
+                if len(validWords) > 0:
+                    message = self.__phraseCleaner.builtMessage(validWords, selector='contextGraph')
+                alg1_list.append(message)
+                
+                sets_string = df['sys'][index]
+                validWords = self.__getListFromString(sets_string)
+                message= ''
+                if len(validWords) > 0:
+                    message = self.__phraseCleaner.builtMessage(validWords, selector='contextGraph')
+                sys_list.append(message)
+
+                sets_string = df['tra'][index]
+                validWords = self.__getListFromString(sets_string)
+                message= ''
+                if len(validWords) > 0:
+                    message = self.__phraseCleaner.builtMessage(validWords, selector='contextGraph')
+                tra_list.append(message)
+                
+                sets_string = df['union'][index]
+                validWords = self.__getListFromString(sets_string)
+                message= ''
+                if len(validWords) > 0:
+                    message = self.__phraseCleaner.builtMessage(validWords, selector='contextGraph')
+                union_list.append(message)
+
+                # print(message)
+                # break
+
+            df_alg1 = pd.DataFrame(alg1_list)
+            df_sys = pd.DataFrame(sys_list)
+            df_tra = pd.DataFrame(tra_list)
+            df_union = pd.DataFrame(union_list)
+
+            pd.concat([df,df_alg1,df_sys,df_tra,df_union], ignore_index=True, axis=1).rename(columns={0: "target", 
+                                                      1: "jsonfile", 
+                                                      2:"noiseMessage", 
+                                                      3:"alg1", 
+                                                      4:"sys", 
+                                                      5:"tra", 
+                                                      6:"union",
+                                                      7: "context-alg1",
+                                                      8: "context-sys",
+                                                      9: "context-tra",
+                                                      10: "context-union"}).to_csv('/content/confidence{}.csv'.format(confidence),index=False)
+
             break
 
 test = End2EndTest()
