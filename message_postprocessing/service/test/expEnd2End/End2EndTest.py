@@ -1,6 +1,8 @@
 import sys
-
+sys.path.insert(0, '../src')
 sys.path.insert(0, '../../src')
+sys.path.insert(0, '../../../src')
+
 sys.path.insert(0, '../bin/spellingCorrectionTrajectory/')
 sys.path.append('../')
 sys.path.append('../../')
@@ -28,6 +30,7 @@ class End2EndTest():
             tra_list = []
             union_list = []
             for index in df.index:
+                print('Procesando archivo {} mensaje {}'.format(confidence, index))
                 target = df['target'][index]
                 noiseMessage = df['noiseMessage'][index]
                 set_alg1, set_sym, set_tra, set_union = self.__phraseCleaner.getWordsSet(noiseMessage, maxOptWords=5)
@@ -112,8 +115,9 @@ class End2EndTest():
                     message = self.__phraseCleaner.builtMessage(validWords, selector='contextGraph')
                 union_list.append(message)
 
-                # print(message)
-                # break
+                print(message)
+                break
+            break
 
             df_alg1 = pd.DataFrame(alg1_list)
             df_sys = pd.DataFrame(sys_list)
@@ -135,4 +139,4 @@ class End2EndTest():
             break
 
 test = End2EndTest()
-test.runMakePhraseTest()
+test.runGetSetsTest()

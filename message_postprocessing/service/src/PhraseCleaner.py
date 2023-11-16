@@ -1,5 +1,6 @@
 from spellchecker import SpellChecker
 from .WordsSelector import WordsSelector
+from .Utils import Utils
 from .SpellingCorrectionTrajectory import SpellingCorrectionTrajectory
 from symspellpy import SymSpell, Verbosity
 
@@ -47,9 +48,10 @@ class PhraseCleaner():
                         if indexValidWord == len(validWord):
                             if self.__spell[validWord] > maxNumWords:
                                 maxNumWords=self.__spell[validWord]
-                            metric = len(validWord)/len(word2clean) #+ self.__spell[validWord]/maxNumWords
+                            # metric = len(validWord)/len(word2clean) #+ self.__spell[validWord]/maxNumWords
                             # metric += self.__spell[validWord]/maxNumWords*0.3 #MOdificado aquiiiiiii
-                            metric += self.__spell[validWord]/self.__maxFrecuency*0.3 #MOdificado aquiiiiiii
+                            # metric += self.__spell[validWord]/self.__maxFrecuency*0.3 #MOdificado aquiiiiiii
+                            metric = Utils.metricEditDistanceModify(validWord, word2clean, self.__spell[validWord]/self.__maxFrecuency, 0.3)
 
                             validwords.append((metric, validWord.strip()))
                             break
@@ -75,8 +77,10 @@ class PhraseCleaner():
 
         for suggestion in suggestions:
             validWord = suggestion.term
-            metric = len(validWord)/len(word2clean) #+ self.__spell[validWord]/maxNumWords
-            metric += self.__spell[validWord]/self.__maxFrecuency*0.3 #MOdificado aquiiiiiii
+            # metric = len(validWord)/len(word2clean) #+ self.__spell[validWord]/maxNumWords
+            # metric += self.__spell[validWord]/self.__maxFrecuency*0.3 #MOdificado aquiiiiiii
+            metric = Utils.metricEditDistanceModify(validWord, word2clean, self.__spell[validWord]/self.__maxFrecuency, 0.3)
+
             validwords.append((metric, validWord.strip()))
 
         return sorted(validwords, key= lambda x: x[0] , reverse=True)[:maxOptWords]

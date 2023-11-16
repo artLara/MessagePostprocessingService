@@ -5,6 +5,10 @@ import heapq
 from fractions import Fraction
 from spellchecker import SpellChecker
 import time
+from Utils import Utils
+
+
+
 
 class SpellingCorrectionTrajectory():
     def __init__(self,coordenatesOrd=None, sizeTable=20, pathFiles='../bin/spellingCorrectionTrajectory/'):
@@ -26,8 +30,11 @@ class SpellingCorrectionTrajectory():
         for i in range(100):
             vocabByLen.append([])
 
+        self.__maxFrecuency = 0
         for word in self.__spell:
             vocabByLen[len(word)].append(word)
+            if self.__spell[word] > self.__maxFrecuency:
+               self.__maxFrecuency = self.__spell[word]
 
         return vocabByLen
 
@@ -52,7 +59,9 @@ class SpellingCorrectionTrajectory():
                 wordTable = tables[validWord]
                 iou = self.calculateIoU(noiseTable, wordTable)
                 if minIoU < iou:
-                    heapq.heappush(validWords, (iou, validWord))
+                    metric = Utils.metricEditDistanceModify(validWord, word2clean, self.__spell[validWord]/self.__maxFrecuency, 0.3)
+                    # heapq.heappush(validWords, (iou, validWord))
+                    heapq.heappush(validWords, (metric, validWord))
                     minIoU = heapq.heappop(validWords)[0]
 
         return sorted(list(validWords), key= lambda x: x[0] , reverse=True)[:maxOptWords]

@@ -1,11 +1,21 @@
 import psutil
 import requests
 import json
+import editdistance
 
 class Utils:
-    @staticmethod
-    def checkRamSize():
-       return psutil.virtual_memory().total/(1024**3) > 18.0
+   def __init__(self):
+      pass
+    
+   @staticmethod
+   def checkRamSize():
+      return psutil.virtual_memory().total/(1024**3) > 18.0
+   
+   @staticmethod
+   def metricEditDistanceModify(validWord, noiseWord, prob, pond):
+      distance = editdistance.eval(validWord, noiseWord)
+      distance = min(len(validWord), distance)
+      return 1 - distance/len(validWord) + prob * pond
     
     # def sendMessage(message):
     #     data_json = json.dumps(dataDict)

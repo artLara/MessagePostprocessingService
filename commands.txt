@@ -3,3 +3,4 @@ pip3 install pandas
 pip3 install psutil
 pip3 install symspellpy
 pip3 install pyspellchecker
+pip3 install editdistance
