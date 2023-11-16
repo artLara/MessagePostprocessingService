@@ -65,6 +65,11 @@ class End2EndTest():
                     continue
 
                 cleanWords.append((-1, word))
+            
+            # if len(cleanWords) < 5:
+            #     return []
+            for _ in range(len(cleanWords), 5): #For square matrix
+                cleanWords.append((-1, '-'))
             validWordsSet.append(cleanWords)
 
         return validWordsSet
