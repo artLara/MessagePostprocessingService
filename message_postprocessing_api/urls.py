@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('message_postProcessing/', include('message_postProcessing.urls'))
+    path('message_postprocessing/', include('message_postprocessing.urls'))
 ]
