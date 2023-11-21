@@ -165,7 +165,7 @@ class PhraseCleaner():
             wordsSetStringSys += '-'
 
         wordsSetStringTra = ''
-        tmpPath = '/content/MessagePostprocessingService/message_postprocessing/service/bin/spellingCorrectionTrajectory/tableWords/'
+        tmpPath = '/home/lara/Desktop/dactilologiaLSM_microservices/MessagePostprocessingService/message_postprocessing/service/bin/spellingCorrectionTrajectory/tableWords/'
         for word in words:
             tmp = self.__st.findCorrectWord(word, pathTablesFiles=tmpPath, distance=4)
             set_algTra.append(tmp)
